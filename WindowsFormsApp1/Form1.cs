@@ -21,8 +21,25 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
+        public DataTable Reader(string strSQL, List<SqlParameter> paras)
+        {
+            //1. SqlConnection、SqlCommand、SqlReader >> DataTable ==> MingDataReader > sql,para>>Datable 
+
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
+
+            //1. SqlConnection、SqlCommand、SqlReader
+            //2. EntityFramework LINQ 、 Lambda
+            //3. Dapper (非 MS SQL ) 
+            //4. MS SQL >>有下 SQL 的需求(例如 join 很多表的時候) >>  db.Database.SqlQuery<T>
+            //5.  IQueryable、  IEnumerable、 List 差別
+            //6. MVC Controller >> 回傳給　Client　一定要是　ｌｉｓｔ
+            //7. Stored Procedure
+
+
+
             NorthwindEntities1 db = new NorthwindEntities1();
 
             // >>  IQueryable  IEnumerable  List
