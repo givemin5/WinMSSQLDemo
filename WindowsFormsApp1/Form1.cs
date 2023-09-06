@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WindowsFormsApp1
@@ -21,50 +23,27 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            //資料庫的連線字串
-            string connectionString = 
-                "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=Northwind;"
-                + "user id=anyo;pwd=123456";
-
-            // SQL
-            string queryString = @"SELECT ProductID, UnitPrice, ProductName from dbo.products 
-WHERE UnitPrice > @pricePoint ORDER BY UnitPrice DESC;";
+            NorthwindEntities1 db = new NorthwindEntities1();
 
 
-            //連線的 class 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            //LINQ
+            //var result = from category in db.Categories 
+            //    where category.CategoryID<=10
+            //    select new
+            //    {
+            //        categoryID = category.CategoryID,
+            //        categoryName = category.CategoryName
+            //    };
+
+            //lambda
+            var result2 = db.Categories.Where(x => x.CategoryID <= 10).Select(x => new
             {
+                categoryID = x.CategoryID,
+                categoryName = x.CategoryName
+            });
+            
+            dataGridView1.DataSource = result2.ToList();
 
-                //  SqlCommand command = connection.CreateCommand();
-                SqlCommand command = new SqlCommand(queryString, connection);
-
-                int paramValue = 5;
-                command.Parameters.AddWithValue("@pricePoint", paramValue);
-
-                try
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    
-
-                    DataTable dt = new DataTable();
-
-                    dt.Load(reader);
-
-                    reader.Close();
-
-                    dataGridView1.DataSource = dt;
-
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-
-                Console.ReadLine();
-            }
         }
     }
 }
