@@ -21,12 +21,6 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        public DataTable Reader(string strSQL, List<SqlParameter> paras)
-        {
-            //1. SqlConnection、SqlCommand、SqlReader >> DataTable ==> MingDataReader > sql,para>>Datable 
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
 
